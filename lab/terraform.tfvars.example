@@ -1,0 +1,18 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored.
+
+region             = "us-east-2"
+my_ip_cidr         = "REPLACE_ME/32"        # curl -s https://checkip.amazonaws.com
+budget_alert_email = "you@example.com"
+
+# Leave empty when using `aws login`.
+aws_profile = "kkterraform"   # credential_process; see kksetup
+
+# Pinned for us-east-2. Set to "" if you change region, then pin what it finds.
+ami_id = "ami-0f26d07c404ab110d"
+
+# Spot needs the "All G and VT Spot Instance Requests" quota, approved
+# separately from the On-Demand one. Leave false until that clears, then flip.
+use_spot = false
+
+# monthly_budget_usd  = 80
+# auto_shutdown_hours = 8

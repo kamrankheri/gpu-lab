@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euxo pipefail
+exec > >(tee /var/log/kk-bootstrap.log) 2>&1
+
+# ---------------------------------------------------------------------------
+# Self-destruct timer.
+# Schedules shutdown N hours from boot. This is a one-time spot request, so
+# shutdown TERMINATES the instance and ends the billing. If you forget this
+# box exists, it costs you one evening instead of one month.
+#
+# Cancel during a long session:  sudo shutdown -c
+# ---------------------------------------------------------------------------
+shutdown -h +$(( ${auto_shutdown_hours} * 60 )) \
+  "nameplate-lab-lab auto-shutdown after ${auto_shutdown_hours}h. Cancel: sudo shutdown -c"
+
+if ! command -v docker >/dev/null 2>&1; then
+  apt-get update -y
+  apt-get install -y docker.io
+  systemctl enable --now docker
+fi
+usermod -aG docker ubuntu || true
+
+# If this fails the AMI is wrong and everything downstream is wasted time.
+nvidia-smi > /var/log/kk-nvidia-smi.log 2>&1 || echo "NVIDIA DRIVER NOT READY" >> /var/log/kk-nvidia-smi.log
+
+docker pull nvcr.io/nvidia/k8s/dcgm-exporter:3.3.5-3.4.0-ubuntu22.04 || true
+
+touch /var/lib/kk-bootstrap-complete
