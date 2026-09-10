@@ -17,3 +17,6 @@ dcgm-log.txt
 
 # quarantined unscrubbed copy, delete this folder by hand
 _to_delete/
+
+# the secret guard names real account ids; never publish it
+.githooks/
