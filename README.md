@@ -132,6 +132,6 @@ MIT. See [LICENSE](LICENSE).
 
 ---
 
-Maintained by [Nameplate Analytics LLC](https://nameplateanalytics.com), a
+Maintained by [Nameplate Analytics](https://nameplateanalytics.com), a
 specialist practice measuring GPU cost attribution for teams running machine
 learning on Kubernetes. Questions: kamk@nameplateanalytics.com
