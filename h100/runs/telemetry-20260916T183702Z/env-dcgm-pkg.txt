@@ -1,0 +1,18 @@
+ii  datacenter-gpu-manager-4-core                    1:4.7.0-1                                     amd64        Metapackage for the CUDA-independent DCGM host-engine runtime
+ii  datacenter-gpu-manager-4-cuda13                  1:4.7.0-1                                     amd64        DCGM diagnostic and profiling binaries for CUDA 13
+ii  datacenter-gpu-manager-4-cuda13-cublas           1:4.7.0-1                                     amd64        NVIDIA® cuBLAS runtime libraries used by DCGM CUDA13 binaries
+ii  datacenter-gpu-manager-4-cuda13-curand           1:4.7.0-1                                     amd64        NVIDIA® cuRAND runtime library used by DCGM CUDA13 binaries
+ii  datacenter-gpu-manager-4-cuda13-cusparselt       1:4.7.0-1                                     amd64        NVIDIA® cuSPARSELt runtime library used by DCGM CUDA13 binaries
+ii  datacenter-gpu-manager-4-cuda13-nccl             1:4.7.0-1                                     amd64        NVIDIA® NCCL runtime library used by DCGM CUDA13 binaries
+ii  datacenter-gpu-manager-4-cuda13-ubergemm2        1:4.7.0-1                                     amd64        UBERGEMM2 GPU workload for DCGM CUDA 13 diagnostics
+ii  datacenter-gpu-manager-4-dcgmproftesterkernels   1:4.7.0-1                                     amd64        CUDA kernels for the DCGM profiling workload generators
+ii  datacenter-gpu-manager-4-module-config           1:4.7.0-1                                     amd64        DCGM GPU configuration module
+ii  datacenter-gpu-manager-4-module-diag             1:4.7.0-1                                     amd64        DCGM single-node diagnostics module and runner
+ii  datacenter-gpu-manager-4-module-health           1:4.7.0-1                                     amd64        DCGM passive health-monitoring module
+ii  datacenter-gpu-manager-4-module-introspect       1:4.7.0-1                                     amd64        DCGM host-engine introspection module
+ii  datacenter-gpu-manager-4-module-nvswitch         1:4.7.0-1                                     amd64        DCGM NVSwitch and ConnectX monitoring module
+ii  datacenter-gpu-manager-4-module-policy           1:4.7.0-1                                     amd64        DCGM GPU policy notification module
+ii  datacenter-gpu-manager-4-module-sysmon           1:4.7.0-1                                     amd64        DCGM NVIDIA CPU monitoring module
+ii  datacenter-gpu-manager-4-proprietary             1:4.7.0-1                                     amd64        Proprietary CUDA-independent DCGM components
+ii  datacenter-gpu-manager-4-proprietary-cuda13      1:4.7.0-1                                     amd64        Proprietary DCGM diagnostic plugins for CUDA 13
+ii  datacenter-gpu-manager-4-python3                 1:4.7.0-1                                     amd64        Python 3 bindings and monitoring integrations for DCGM

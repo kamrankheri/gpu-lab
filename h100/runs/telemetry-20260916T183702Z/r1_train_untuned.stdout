@@ -1,0 +1,5 @@
+Using the latest cached version of the dataset since Salesforce/wikitext couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'wikitext-2-raw-v1' at /home/ubuntu/.cache/huggingface/datasets/Salesforce___wikitext/wikitext-2-raw-v1/0.0.0/b08601e04326c79dfdd32d625aee71d232d685c3 (last modified on Wed Sep 16 18:01:05 2026).
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 3893.75it/s]
+{"mode": "untuned", "model": "Qwen/Qwen2.5-0.5B", "batch_size": 4, "seq": 512, "steps": 3255, "tokens": 1365822, "seconds": 600.2, "tokens_per_second": 2275.7, "final_loss": 3.4027}

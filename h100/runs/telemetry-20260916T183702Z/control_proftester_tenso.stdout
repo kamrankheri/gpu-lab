@@ -1,0 +1,64 @@
+Skipping CreateDcgmGroups() since DCGM validation is disabled
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.64e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.39e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.36e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.40e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.43e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.45e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.41e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.40e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.45e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.45e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.45e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.40e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.38e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.38e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.36e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.36e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.43e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.41e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.39e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.37e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.38e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.37e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.37e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.38e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.39e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.41e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.43e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.43e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.45e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.41e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.43e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.41e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.44e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.46e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.44e+05 gflops).
+Worker 0:0 [1004]: TensorEngineActive:  generated ???, dcgm 0 (6.42e+05 gflops).
+Worker 0:0[1004]: Message: Set CUDA_VISIBLE_DEVICES to GPU-REDACTED
+Bus ID 00000000:06:00.0 mapped to cuda device ID 0
+DCGM CudaContext Init completed successfully.
+
+CU_DEVICE_ATTRIBUTE_MAX_THREADS_PER_MULTIPROCESSOR: 2048
+CUDA_VISIBLE_DEVICES: GPU-REDACTED
+CU_DEVICE_ATTRIBUTE_MULTIPROCESSOR_COUNT: 132
+CU_DEVICE_ATTRIBUTE_MAX_SHARED_MEMORY_PER_MULTIPROCESSOR: 233472
+CU_DEVICE_ATTRIBUTE_COMPUTE_CAPABILITY_MAJOR: 9
+CU_DEVICE_ATTRIBUTE_COMPUTE_CAPABILITY_MINOR: 0
+CU_DEVICE_ATTRIBUTE_GLOBAL_MEMORY_BUS_WIDTH: 5120
+CU_DEVICE_ATTRIBUTE_MEMORY_CLOCK_RATE: 2619
+Max Memory bandwidth: 3352320000000 bytes (3352.3 GiB)
+CU_DEVICE_ATTRIBUTE_ECC_SUPPORT: true
+GPU 0, TestField 1004 test PASSED.
+All Tests Passed.
