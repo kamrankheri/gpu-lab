@@ -12,3 +12,4 @@ No deviation from the registered hardware class, workload, order, sampling or an
 5. No A100 run was performed.
 6. GPU UUID, serial number, board part number, module ID, instance IP and hostname were redacted from the published files after the run.
 7. Throughput comparisons (completed requests per window, training tokens per second) are post-hoc. They are not part of the registered DCGM analysis and are labeled post-hoc wherever published.
+8. Harness defect. In both saturated windows, vllm bench serve generated its 40,000 random prompts inside the sampling window. Traffic started at second 117 (r1) and second 117 (r2) of the 600 s window, so 72 and 72 idle samples fall inside the registered analysis after its 45 s trim. The registered rows are published unchanged. Figures measured from load start are post-hoc, computed by h100/posthoc.py.

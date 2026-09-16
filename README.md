@@ -1,48 +1,64 @@
 # GPU telemetry lab
 
-A reproducible AWS lab that demonstrates why `DCGM_FI_DEV_GPU_UTIL`, the metric
-on almost every default GPU dashboard, is not a measure of GPU utilization.
+Measurements of what `DCGM_FI_DEV_GPU_UTIL`, the metric on almost every default
+GPU dashboard, does and does not tell you about the work a GPU is doing.
 
-Everything here is what produced the measurement published at
-[nameplateanalytics.com/method](https://nameplateanalytics.com/method). The raw
-sampler output from that run is in [`data/dcgm-session1.txt`](data/dcgm-session1.txt),
-unedited.
+The current record is the H100 run of 2026-09-16 in [`h100/`](h100), published
+at [nameplateanalytics.com/method](https://nameplateanalytics.com/method). The
+first measurement, a Tesla T4 run of 2026-09-04, is kept below with its raw log
+and the lab that produced it.
 
 ---
 
-## The result
+## H100 run, 2026-09-16
+
+Protocol registered before the run in [`h100/PROTOCOL.md`](h100/PROTOCOL.md).
+Registered table, post-hoc throughput and limits in
+[`h100/RESULTS.md`](h100/RESULTS.md). Raw `dcgmi dmon` logs, benchmark and
+training output, and environment captures in
+[`h100/runs/telemetry-20260916T183702Z`](h100/runs/telemetry-20260916T183702Z).
+Deviations in [`h100/DEVIATIONS.md`](h100/DEVIATIONS.md).
+
+Two training configurations of the same model read the same utilization and did
+very different amounts of work (registered DCGM means, post-hoc throughput):
+
+| Configuration | GPUTL | SMACT | Power | Real tokens/s | Token slots/s |
+|---|---|---|---|---|---|
+| untuned: fp32, padded to 512, batch 4, per-step CPU tokenization | 99.5% | 90.0% | 577 W | 2,275.7 | 11,107 |
+| tuned: bf16, packed 512-token blocks, batch 16, 8 loader workers | 99.3% | 87.6% | 597 W | 60,527.6 | 60,529 |
+
+The tuned run processed 26.6x the real tokens per second (5.4x per token slot).
+Neither GPUTL nor SMACT separates them. On the vLLM serving and training loads,
+GPUTL ran 1.1x to 1.6x SMACT. A loaded but idle vLLM server read 0 on every
+utilization field at 116 W, so idle is visible without the profiling fields.
+The two repeats agree within 1.2 points on every percentage field and 2 W on
+power.
+
+Limits: one H100 80GB (DCGM reports H100 80GB HBM3) on Lambda. One serving
+model (Qwen2.5-7B-Instruct) with synthetic random prompts. One 0.5B training
+model on wikitext-2. The untuned configuration was constructed for the test,
+and no claim is made about how common it is. Single GPU, no multi-GPU traffic.
+
+---
+
+## First measurement, 2026-09-04: Tesla T4
 
 Tesla T4 on a `g4dn.xlarge`, driver 595.91.07, `dcgmi dmon` sampling at 1 Hz,
-242 samples, 2026-09-04.
+242 samples. The raw sampler output is in
+[`data/dcgm-session1.txt`](data/dcgm-session1.txt), unedited.
 
 | Workload | GPUTL<br>reported | SMACT<br>multiprocessors active | TENSO<br>tensor pipe active |
 |---|---|---|---|
 | 64-element add, launched in a loop | 20.0% | 0.2% | 0.0% |
 | 4096² fp16 matmul | 100.0% | 98.1% | 87.8% |
 
-The first row is the finding: **the reported number is one hundred times the
-measured one.** The second row is the control. When the chip genuinely is
-working, all three fields agree, which is how you know the instrument was sound
-and the first row is not an artifact of the setup.
+The first row is a tiny kernel repeated in a tight loop, built to show the
+failure mode: a T4 has 40 streaming multiprocessors, a 64-element add occupies
+one of them, and something stays resident in almost every sample window. The
+second row is the control. The first-row gap was specific to that kernel. On
+the realistic H100 loads above, GPUTL ran 1.1x to 1.6x SMACT.
 
-This is not a bug in anyone's dashboard. `DCGM_FI_DEV_GPU_UTIL` reports whether
-a kernel was *resident* on the device during the sample window. It says nothing
-about how much of the device that kernel used. A T4 has 40 streaming
-multiprocessors; a 64-element add occupies one of them, and launched in a tight
-loop it keeps something resident in almost every sample window.
-
-### What this does not prove
-
-One GPU model, two synthetic workloads chosen to bracket the range, one machine.
-A T4 is not an H100 and the ratio on other hardware will differ. This
-establishes that the metric *can* be wrong by two orders of magnitude and that
-it fails silently. It does not establish that any particular cluster is wrong,
-by how much, or on which workloads. The only way to know that is to instrument
-the cluster and read it.
-
----
-
-## Reproducing it
+## Reproducing the T4 measurement
 
 Cost is roughly $0.53/hour for the `g4dn.xlarge` in `us-east-1` at on-demand
 rates, plus a little EBS. The stack builds an 8-hour auto-shutdown timer, a
