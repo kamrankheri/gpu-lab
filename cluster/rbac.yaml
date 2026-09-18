@@ -1,0 +1,89 @@
+# Read-only access for a GPU cost audit.
+#
+# This is the complete permission set the diagnostic needs. It grants list on
+# nodes and pods, and get on one object, the kube-system namespace, and nothing
+# else: no watch, no exec, no logs, no writes of any kind. There are no "deny"
+# rules in Kubernetes RBAC, so what is listed here is exactly what is granted.
+# rbac-scaling.yaml is a separate, optional add-on; the diagnostic does not
+# need it.
+#
+# What it exposes. The role cannot read Secret objects. But list on pods returns
+# full pod specs, and a pod spec carries every literal environment variable
+# value, command and argument its containers were given. A database password
+# set as `env: - name: DB_PASSWORD value: ...` rather than through a
+# secretKeyRef is readable by anyone holding this credential. The collector
+# keeps none of those fields, but the credential can read them, so treat it
+# with the care that implies and delete it when the engagement ends.
+#
+# Why a ClusterRole rather than a Role: nodes are cluster-scoped, and a Role
+# cannot grant them. Reading pods across all namespaces also requires a
+# ClusterRole bound with a ClusterRoleBinding.
+#   https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+#
+# Why these resources:
+#   nodes  GPU capacity and allocatable, from .status.capacity and
+#          .status.allocatable, plus .spec.providerID to map the node back to
+#          its EC2 instance and therefore to its line in the bill.
+#   pods   GPU requests, which is the only way to know what is allocated.
+#          There is no .status.allocated field on a Node; kubectl computes that
+#          table client-side by summing pod requests. Also each pod's
+#          status.conditions, which carry the scheduler's reason a pod is
+#          pending. The namespace used for attribution comes from each pod's
+#          own metadata.
+#   namespaces/kube-system
+#          Its metadata.uid is the cluster's identity in every snapshot. A
+#          kubeconfig context name is local to whoever ran the collector; this
+#          UID is not, which is what lets samples from two laptops be merged
+#          and samples from two clusters be refused. resourceNames pins the
+#          grant to that one object, so no other namespace can be read.
+#
+# Why these verbs: both collection paths list nodes and pods and never read
+# one by name, so get is not granted on them. watch is not granted because
+# nothing watches.
+#
+# Apply:
+#   kubectl apply -f rbac.yaml
+# Remove when the engagement ends:
+#   kubectl delete -f rbac.yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gpu-cost-audit
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: gpu-cost-audit
+    app.kubernetes.io/managed-by: gpuaudit
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: gpu-cost-audit-reader
+  labels:
+    app.kubernetes.io/name: gpu-cost-audit
+rules:
+  # "" is the core API group. A PolicyRule is the cross-product of apiGroups x
+  # resources x verbs (x resourceNames), so nodes and pods share one rule and
+  # the single named namespace needs its own.
+  - apiGroups: [""]
+    resources: ["nodes", "pods"]
+    verbs: ["list"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    resourceNames: ["kube-system"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: gpu-cost-audit-reader
+  labels:
+    app.kubernetes.io/name: gpu-cost-audit
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: gpu-cost-audit-reader
+subjects:
+  - kind: ServiceAccount
+    name: gpu-cost-audit
+    namespace: kube-system
