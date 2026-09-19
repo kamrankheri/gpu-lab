@@ -118,6 +118,9 @@ nobody was asked the question that requires them.
 ## What is in here
 
 ```
+cluster/
+  collect-cluster-snapshot.sh                     three read-only kubectl reads, one JSON file
+  rbac.yaml                                       list on nodes and pods, get on kube-system
 lab/
   main.tf, variables.tf, versions.tf, budget.tf   the instance, SG, budget alarm
   user_data.sh.tftpl                              8-hour auto-shutdown timer
