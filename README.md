@@ -1,7 +1,8 @@
 # GPU telemetry lab
 
-Measurements of what `DCGM_FI_DEV_GPU_UTIL`, the metric on almost every default
-GPU dashboard, does and does not tell you about the work a GPU is doing.
+Measurements of what `DCGM_FI_DEV_GPU_UTIL`, the field dcgm-exporter's bundled
+Grafana dashboard graphs as GPU Utilization, does and does not tell you about
+the work a GPU is doing.
 
 The current record is the H100 run of 2026-09-16 in [`h100/`](h100), published
 at [nameplateanalytics.com/method](https://nameplateanalytics.com/method). The
@@ -109,9 +110,11 @@ dcgmi dmon -e 203,1001,1002,1003,1004,1005 -d 1000
 Verify the field IDs on your own build with `dcgmi dmon -l`. They are stable in
 practice but they are not guaranteed across DCGM versions.
 
-The profiling fields (1001–1005) ship in the DCGM exporter and cost nothing to
-turn on. The reason most clusters do not have them is not difficulty; it is that
-nobody was asked the question that requires them.
+The profiling fields (1001–1005) ship in the DCGM exporter. Its default counters
+file scrapes graphics-engine, tensor-pipe and DRAM activity (1001, 1004, 1005) as
+shipped; SM activity and occupancy (1002, 1003) are commented out, so they take a
+change to that file. The exporter container needs `SYS_ADMIN` to read any
+profiling field, and the shipped manifests grant it.
 
 ---
 
